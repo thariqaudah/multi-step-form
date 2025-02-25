@@ -7,15 +7,6 @@ export default function FormSteps() {
 
   const [currentStep, setCurrentStep] = useState<number | null>(null);
 
-  const bgSidebarMobile =
-    process.env.NODE_ENV === "development"
-      ? "bg-[url('/bg-sidebar-mobile.svg')]"
-      : `bg-[url('/${process.env.PAGES_BASE_PATH}/bg-sidebar-mobile.svg')]`;
-  const bgSidebarDesktop =
-    process.env.NODE_ENV === "development"
-      ? "lg:bg-[url('/bg-sidebar-desktop.svg')]"
-      : `lg:bg-[url('/${process.env.PAGES_BASE_PATH}/bg-sidebar-desktop.svg')]`;
-
   useEffect(() => {
     if (pathname === "/") {
       setCurrentStep(1);
