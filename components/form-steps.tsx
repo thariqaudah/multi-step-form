@@ -6,6 +6,15 @@ export default function FormSteps() {
 
   const [currentStep, setCurrentStep] = useState<number | null>(null);
 
+  const bgSidebarMobile =
+    process.env.NODE_ENV === "development"
+      ? "bg-[url('/bg-sidebar-mobile.svg')]"
+      : `bg-[url('/${process.env.PAGES_BASE_PATH}/bg-sidebar-mobile.svg')]`;
+  const bgSidebarDesktop =
+    process.env.NODE_ENV === "development"
+      ? "lg:bg-[url('/bg-sidebar-desktop.svg')]"
+      : `lg:bg-[url('/${process.env.PAGES_BASE_PATH}/bg-sidebar-desktop.svg')]`;
+
   useEffect(() => {
     if (pathname === "/") {
       setCurrentStep(1);
@@ -22,7 +31,7 @@ export default function FormSteps() {
 
   return (
     <ol
-      className={`absolute left-0 top-0 w-screen -z-20 pt-8 pb-24 flex flex-row justify-center gap-4 bg-[url('/bg-sidebar-mobile.svg')] bg-center bg-cover lg:basis-1/3 lg:flex-col lg:justify-start lg:rounded-lg lg:h-auto lg:gap-8 lg:p-6 lg:relative lg:top-auto lg:left-auto lg:w-auto lg:z-0 lg:bg-[url('/bg-sidebar-desktop.svg')]`}
+      className={`absolute left-0 top-0 w-screen -z-20 pt-8 pb-24 flex flex-row justify-center gap-4 bg-center bg-cover lg:basis-1/3 lg:flex-col lg:justify-start lg:rounded-lg lg:h-auto lg:gap-8 lg:p-6 lg:relative lg:top-auto lg:left-auto lg:w-auto ${bgSidebarMobile} ${bgSidebarDesktop}`}
     >
       <li className="flex items-center gap-3">
         <div
