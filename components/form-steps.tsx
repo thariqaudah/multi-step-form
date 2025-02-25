@@ -1,9 +1,11 @@
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import bgSidebarMobile from "@/public/bg-sidebar-mobile.svg";
+import bgSidebarDesktop from "@/public/bg-sidebar-desktop.svg";
 
 export default function FormSteps() {
   const pathname = usePathname();
-  const [bgImage, setBgImage] = useState("/bg-sidebar-mobile.svg");
+  const [bgImage, setBgImage] = useState(bgSidebarMobile.src);
 
   const [currentStep, setCurrentStep] = useState<number | null>(null);
 
@@ -23,10 +25,10 @@ export default function FormSteps() {
 
   useEffect(() => {
     const updateBackground = () => {
-      if (window.matchMedia("(min-width: 768px)").matches) {
-        setBgImage("/bg-sidebar-desktop.svg");
+      if (window.innerWidth >= 768) {
+        setBgImage(bgSidebarDesktop.src);
       } else {
-        setBgImage("/bg-sidebar-mobile.svg");
+        setBgImage(bgSidebarMobile.src);
       }
     };
 
@@ -37,7 +39,7 @@ export default function FormSteps() {
 
   return (
     <ol
-      className={`absolute left-0 top-0 w-screen -z-20 pt-8 pb-24 flex flex-row justify-center gap-4 bg-center bg-cover lg:basis-1/3 lg:flex-col lg:justify-start lg:rounded-lg lg:h-auto lg:gap-8 lg:p-6 lg:relative lg:top-auto lg:left-auto lg:w-auto`}
+      className={`absolute left-0 top-0 w-screen -z-20 pt-8 pb-24 flex flex-row justify-center gap-4 bg-center bg-cover lg:basis-1/3 lg:flex-col lg:justify-start lg:rounded-lg lg:h-auto lg:gap-8 lg:p-6 lg:relative lg:z-0 lg:top-auto lg:left-auto lg:w-auto`}
       style={{ backgroundImage: `url(${bgImage})` }}
     >
       <li className="flex items-center gap-3">
