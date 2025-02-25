@@ -3,7 +3,6 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { type InfoFormT } from "@/lib/schema";
 import FormSteps from "@/components/form-steps";
 import FormHeader from "@/components/form-header";
 
@@ -117,11 +116,6 @@ const addOnOptions = [
 export default function SummaryForm() {
   const router = useRouter();
 
-  const [basicInfo, setBasicInfo] = useState<InfoFormT>({
-    name: "",
-    email_address: "",
-    phone_number: "",
-  });
   const [selectedPlan, setSelectedPlan] = useState<PlanOptionT | null>(null);
   const [selectedAddOns, setSelectedAddOns] = useState<AddOnT[]>([]);
 
@@ -130,7 +124,7 @@ export default function SummaryForm() {
       .map((item) => item?.priceValue)
       .filter((priceValue): priceValue is number => priceValue !== undefined);
     return priceItems.reduce((sum, priceValue) => sum + priceValue, 0);
-  }, [selectedPlan, setSelectedAddOns]);
+  }, [selectedPlan, selectedAddOns]);
 
   useEffect(function () {
     const parsedInfoForm = sessionStorage.getItem("parsedInfoForm")
@@ -146,7 +140,7 @@ export default function SummaryForm() {
     console.log({ parsedInfoForm, parsedPlanForm, parsedAddOns });
 
     if (parsedInfoForm) {
-      setBasicInfo(parsedInfoForm);
+      console.log(parsedInfoForm);
     }
 
     if (parsedPlanForm) {

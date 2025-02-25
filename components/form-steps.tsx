@@ -18,7 +18,7 @@ export default function FormSteps() {
     } else {
       setCurrentStep(null);
     }
-  }, []);
+  }, [pathname]);
 
   return (
     <ol

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,7 +22,6 @@ import iconPro from "@/public/icon-pro.svg";
 import FormHeader from "@/components/form-header";
 import FormSteps from "@/components/form-steps";
 import { Switch } from "@/components/ui/switch";
-import { useEffect, useMemo, useState } from "react";
 
 const planOptions = [
   {
@@ -76,24 +76,27 @@ export default function SelectPlanForm() {
     planOptions.filter((plan) => plan.type === "yearly")
   );
 
-  useEffect(function () {
-    const planForm = sessionStorage.getItem("planForm");
-    const parsedPlanForm: PlanFormT = planForm ? JSON.parse(planForm) : null;
+  useEffect(
+    function () {
+      const planForm = sessionStorage.getItem("planForm");
+      const parsedPlanForm: PlanFormT = planForm ? JSON.parse(planForm) : null;
 
-    if (parsedPlanForm) {
-      console.log({ parsedPlanForm });
-      form.setValue("type", parsedPlanForm.type);
-      form.setValue("is_yearly", parsedPlanForm.is_yearly);
+      if (parsedPlanForm) {
+        console.log({ parsedPlanForm });
+        form.setValue("type", parsedPlanForm.type);
+        form.setValue("is_yearly", parsedPlanForm.is_yearly);
 
-      setSelectedPlans(
-        planOptions.filter((plan) => {
-          return parsedPlanForm.is_yearly
-            ? plan.type === "yearly"
-            : plan.type === "monthly";
-        })
-      );
-    }
-  }, []);
+        setSelectedPlans(
+          planOptions.filter((plan) => {
+            return parsedPlanForm.is_yearly
+              ? plan.type === "yearly"
+              : plan.type === "monthly";
+          })
+        );
+      }
+    },
+    [form]
+  );
 
   function onSubmit(values: PlanFormT) {
     console.log({ values });

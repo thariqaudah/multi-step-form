@@ -80,28 +80,31 @@ export default function AddOnsForm() {
     addOnOptions.filter((addOn) => addOn.type === "monthly")
   );
 
-  useEffect(function () {
-    const addOnsForm = sessionStorage.getItem("addOnsForm");
-    const planForm = sessionStorage.getItem("planForm");
-    const parsedAddOnsForm = addOnsForm ? JSON.parse(addOnsForm) : null;
-    const parsedPlanForm: PlanFormT = planForm ? JSON.parse(planForm) : null;
+  useEffect(
+    function () {
+      const addOnsForm = sessionStorage.getItem("addOnsForm");
+      const planForm = sessionStorage.getItem("planForm");
+      const parsedAddOnsForm = addOnsForm ? JSON.parse(addOnsForm) : null;
+      const parsedPlanForm: PlanFormT = planForm ? JSON.parse(planForm) : null;
 
-    console.log({ parsedAddOnsForm, parsedPlanForm });
+      console.log({ parsedAddOnsForm, parsedPlanForm });
 
-    // check selected plan
-    if (parsedPlanForm?.is_yearly) {
-      setAddons(addOnOptions.filter((addOn) => addOn.type === "yearly"));
-    }
+      // check selected plan
+      if (parsedPlanForm?.is_yearly) {
+        setAddons(addOnOptions.filter((addOn) => addOn.type === "yearly"));
+      }
 
-    if (parsedAddOnsForm) {
-      const filteredAddOns = parsedAddOnsForm.filter((addOn: string) => {
-        return parsedPlanForm?.is_yearly
-          ? addOn.includes("yearly")
-          : addOn.includes("monthly");
-      });
-      form.setValue("add_ons", filteredAddOns);
-    }
-  }, []);
+      if (parsedAddOnsForm) {
+        const filteredAddOns = parsedAddOnsForm.filter((addOn: string) => {
+          return parsedPlanForm?.is_yearly
+            ? addOn.includes("yearly")
+            : addOn.includes("monthly");
+        });
+        form.setValue("add_ons", filteredAddOns);
+      }
+    },
+    [form]
+  );
 
   function handleGoBack() {
     router.push("/select-plan");

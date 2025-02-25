@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,7 +17,6 @@ import { useForm } from "react-hook-form";
 import { InfoFormSchema, type InfoFormT } from "@/lib/schema";
 import FormSteps from "@/components/form-steps";
 import FormHeader from "@/components/form-header";
-import { useEffect, useState } from "react";
 
 export default function InfoForm() {
   const router = useRouter();
@@ -29,16 +29,19 @@ export default function InfoForm() {
     },
   });
 
-  useEffect(function () {
-    const infoForm = sessionStorage.getItem("infoForm");
-    const parsedInfoForm: InfoFormT = infoForm ? JSON.parse(infoForm) : null;
+  useEffect(
+    function () {
+      const infoForm = sessionStorage.getItem("infoForm");
+      const parsedInfoForm: InfoFormT = infoForm ? JSON.parse(infoForm) : null;
 
-    if (parsedInfoForm) {
-      form.setValue("name", parsedInfoForm.name);
-      form.setValue("email_address", parsedInfoForm.email_address);
-      form.setValue("phone_number", parsedInfoForm.phone_number);
-    }
-  }, []);
+      if (parsedInfoForm) {
+        form.setValue("name", parsedInfoForm.name);
+        form.setValue("email_address", parsedInfoForm.email_address);
+        form.setValue("phone_number", parsedInfoForm.phone_number);
+      }
+    },
+    [form]
+  );
 
   function onSubmit(values: InfoFormT) {
     console.log({ values });
